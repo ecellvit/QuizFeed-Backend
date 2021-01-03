@@ -1,6 +1,9 @@
 const express = require("express"); //acquire express
 const bodyParser = require("body-parser"); //acquire bodyParser
 const mySql = require("mysql");
+const bcrypt =  require("bcrypt");
+
+const saltRounds = 10;
 
 const app = express(); //initialize express
 app.use(bodyParser.urlencoded({extended:true}));
@@ -49,16 +52,22 @@ app.post("/", function(req,res)
             }
             else
             {
-                //TODO:CHECK HASHING PASSWORD
-                if(rows[0].password===req.body.password)
+                bcrypt.compare(req.body.password,rows[0].password,function(err,result)
                 {
-                    res.render("dashboard_student");
-                }
-                else
-                {
-                    console.log("Incorrect Username or Password 2");
-                    res.redirect("/");
-                }
+                    if(err)
+                    {
+                        console.log("Error Comparing Hashed Password from database: "+err);
+                    }
+                    else if(result)
+                    {
+                        res.render("dashboard_student");
+                    }
+                    else
+                    {
+                        console.log("Incorrect Username or Password 2");
+                        res.redirect("/");
+                    }
+                });
             }
         }
     });
@@ -72,20 +81,33 @@ app.get("/register", function(req,res)
 
 app.post("/register", function(req,res)
 {
-    //TODO: Password hashing
-    con.query("INSERT INTO users (name,email,password) values(?,?,?)",[req.body.name,req.body.email,req.body.password],function(error,rows,fields)
+    let password = req.body.password;
+
+    bcrypt.hash(password,saltRounds,function(err,hash) //hashing the password
     {
-        if(error)
+        if(err)
         {
-            console.log("Error3");
+            console.log("Error Hashing: "+err);
         }
         else
-        {
-            console.log("Entered New Data");
+        {   //inserting into database
+            con.query("INSERT INTO users (name,email,password) values(?,?,?)",[req.body.name,req.body.email,hash],function(error,rows,fields)
+            {
+                if(error)
+                {
+                    console.log("Error3: "+error);
+                }
+                else
+                {
+                    console.log("Entered New Data");
+                }
+            });
+
+            res.redirect("/");
         }
     });
 
-    res.redirect("/");
+
 });
 
 app.listen(3000, function() //start listening on port 3000
