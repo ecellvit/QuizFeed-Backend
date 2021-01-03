@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require("express"); //acquire express
 const bodyParser = require("body-parser"); //acquire bodyParser
 const mySql = require("mysql");
 const bcrypt =  require("bcrypt");
+const session = require("express-session");
 
 const saltRounds = 10;
 
@@ -9,6 +11,7 @@ const app = express(); //initialize express
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public")); //static pages
 app.set("view engine","ejs"); //ejs view
+app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true})); //setting session
 
 //creating connection
 var con = mySql.createConnection({
@@ -32,7 +35,14 @@ con.connect(function(err) //connect to db
 
 app.get("/", function(req,res)
 {
-    res.render("login",{Name:"Rehaan"});
+    if(!req.session.user)
+    {
+        res.render("login",{Name:"Rehaan"});
+    }
+    else
+    {
+        res.render("dashboard_student");
+    }
 });
 
 app.post("/", function(req,res)
@@ -60,6 +70,8 @@ app.post("/", function(req,res)
                     }
                     else if(result)
                     {
+                        req.session.user = rows[0].name;
+                        console.log("Session User: "+req.session.user);
                         res.render("dashboard_student");
                     }
                     else
@@ -108,6 +120,12 @@ app.post("/register", function(req,res)
     });
 
 
+});
+
+app.get("/logout",function(req,res)
+{
+    req.session.destroy();
+    res.redirect("/");
 });
 
 app.listen(3000, function() //start listening on port 3000
