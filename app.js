@@ -1,134 +1,34 @@
 require('dotenv').config();
-const express = require("express"); //acquire express
-const bodyParser = require("body-parser"); //acquire bodyParser
-const mySql = require("mysql");
-const bcrypt =  require("bcrypt");
-const session = require("express-session");
+const express = require("express");
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+const userRoutes = require("./api/routes/user");
 
-const saltRounds = 10;
+const app = express();
 
-const app = express(); //initialize express
+const port = process.env.PORT || 3000;
+
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(express.static("public")); //static pages
-app.set("view engine","ejs"); //ejs view
-app.use(session({secret:process.env.SECRET,resave:false,saveUninitialized:true})); //setting session
+app.use(bodyParser.json());
 
-//creating connection
-var con = mySql.createConnection({
-  host:"localhost",
-  user:"root",
-  password:"",
-  database:"quizfeed"
-});
-
-con.connect(function(err) //connect to db
+//adding required headers to prevent CORS(Cross Origin Resourse Sharin) Error
+app.use((req,res,next)=>
 {
-  if(err)
-  {
-      console.log("Error Connecting to Database: "+err);
-  }
-  else
-  {
-      console.log("Connected to Database: Successful");
-  }
-});
-
-app.get("/", function(req,res)
-{
-    if(!req.session.user)
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers",
+    "Origin,X-Requested-With,Content-Type,Accept,Authorization");
+    if(req.method === "OPTIONS")
     {
-        res.render("login",{Name:"Rehaan"});
+        res.header("Access-Control-Allow-Methods","PUT,POST,PATCH,DELETE,GET");
+        return res.status(200).json({});
     }
-    else
-    {
-        res.render("dashboard_student");
-    }
+    next();
 });
 
-app.post("/", function(req,res)
-{
-    con.query("SELECT * FROM users WHERE email=?",[req.body.email],function(error,rows,fields)
-    {
-        if(error)
-        {
-            console.log("Error3");
-        }
-        else
-        {
-            if(rows.length===0)
-            {
-                console.log("Incorrect Username or Password 1");
-                res.redirect("/");
-            }
-            else
-            {
-                bcrypt.compare(req.body.password,rows[0].password,function(err,result)
-                {
-                    if(err)
-                    {
-                        console.log("Error Comparing Hashed Password from database: "+err);
-                    }
-                    else if(result)
-                    {
-                        req.session.user = rows[0].name;
-                        console.log("Session User: "+req.session.user);
-                        res.render("dashboard_student");
-                    }
-                    else
-                    {
-                        console.log("Incorrect Username or Password 2");
-                        res.redirect("/");
-                    }
-                });
-            }
-        }
-    });
+//Routes which should handle Requests
+app.use('/user',userRoutes);
 
-});
-
-app.get("/register", function(req,res)
-{
-    res.render("register");
-});
-
-app.post("/register", function(req,res)
-{
-    let password = req.body.password;
-
-    bcrypt.hash(password,saltRounds,function(err,hash) //hashing the password
-    {
-        if(err)
-        {
-            console.log("Error Hashing: "+err);
-        }
-        else
-        {   //inserting into database
-            con.query("INSERT INTO users (name,email,password) values(?,?,?)",[req.body.name,req.body.email,hash],function(error,rows,fields)
-            {
-                if(error)
-                {
-                    console.log("Error3: "+error);
-                }
-                else
-                {
-                    console.log("Entered New Data");
-                }
-            });
-
-            res.redirect("/");
-        }
-    });
-
-
-});
-
-app.get("/logout",function(req,res)
-{
-    req.session.destroy();
-    res.redirect("/");
-});
-
-app.listen(3000, function() //start listening on port 3000
-{
-    console.log("Server Up and Running on Port 3000")
+app.listen(port,()=>{
+    console.log("Server Up and Running at 3000");
 });
