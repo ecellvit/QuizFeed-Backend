@@ -7,7 +7,8 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 # USER SIGNUP
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/signup 
 2. Expecting Name, Email, Password, Access as name, email, password, access
-3. If Successfully Registered, returns JSON containing Message, Name,Email,Access, and Request Possible
+   # NOTE: Access can be of three types only- student / teacher / admin
+4. If Successfully Registered, returns JSON containing Message, Name,Email,Access, and Request Possible
 
 # USER LOGIN
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/login
