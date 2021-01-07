@@ -18,4 +18,4 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 # CREATING A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/createquiz
 2. Expecting Quizname, Questions as quizname(string), questions(array of question (string))
-3. If Successfully Logged In, returns JSON containing message, quiz id, and url to access quiz data
+3. If Successfully quiz created, returns JSON containing message, quiz id, and url to access quiz data
