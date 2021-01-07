@@ -38,8 +38,8 @@ router.post("/createquiz",(req,res,next)=>{
           {
               console.log("Error");
               res.status(500).json({
-                Error:err,
-                Message:"Db Connection Error"
+                error:err,
+                message:"Db Connection Error"
               });
           }
           else
@@ -123,9 +123,9 @@ router.post("/createquiz",(req,res,next)=>{
                                             {
                                                 con.release();  // return the connection to pool
                                                 res.status(200).json({
-                                                    Message:"Quiz Entered Successful",
+                                                    message:"Quiz Entered Successful",
                                                     quiz_id: quiz_id,
-                                                    Request:{
+                                                    request:{
                                                       type:"POST",
                                                       url:"https://....../quiz/givequiz/"+quiz_id
                                                     }
@@ -146,6 +146,53 @@ router.post("/createquiz",(req,res,next)=>{
       });
 });
 
-
+router.get("/:quizId",(req,res,next)=>{
+      pool.getConnection((err,con)=>{
+          if(err)
+          {
+              console.log("Error");
+              res.status(500).json({
+                Error:err,
+                message:"Db Connection Error"
+              });
+          }
+          else
+          {
+              const sql = "SELECT quiz_name, question FROM quiz_details JOIN quiz_questions ON quiz_details.quiz_id = quiz_questions.quiz_id JOIN question_details ON quiz_questions.question_id = question_details.question_id WHERE quiz_details.quiz_id = "+req.params.quizId;
+              con.query(sql,(err,rows,fields)=>{
+                  if(err)
+                  {
+                      con.release();
+                      return res.status(500).json({
+                          error:err
+                      });
+                  }
+                  else
+                  {
+                      con.release();
+                      if(rows.length > 0)
+                      {
+                          const quizname = rows[0].quiz_name;
+                          let questions = [];
+                          for(var i=0;i<rows.length;i++)
+                          {
+                              questions.push(rows[i].question);
+                          }
+                          return res.status(200).json({
+                              quiz_name: quizname,
+                              questions: questions
+                          });
+                      }
+                      else
+                      {
+                          return res.status(409).json({
+                              message: "FAILED: No Such Quiz"
+                          });
+                      }
+                  }
+              });
+          }
+      });
+});
 
 module.exports = router;
