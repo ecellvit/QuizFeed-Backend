@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const mySql = require('mysql');
 const router = express.Router();
+const checkAuth = require("../middleware/check-auth");
 
 //create connection Pool
 const pool = mySql.createPool({
@@ -31,7 +32,7 @@ router.get("/createquiz",(req,res,next)=>{
 
 });
 
-router.post("/createquiz",(req,res,next)=>{
+router.post("/createquiz",checkAuth,(req,res,next)=>{
 
       pool.getConnection((err,con) => {
           if(err)
@@ -79,7 +80,6 @@ router.post("/createquiz",(req,res,next)=>{
                              data.push(req.body.questions[i]);
                              entry_data.push(data);
                           }
-                          console.log(entry_data);
 
                           con.query("INSERT INTO question_details (question) VALUES ?",[entry_data],(err,rows,fields)=>{
                               if(err)
@@ -121,14 +121,26 @@ router.post("/createquiz",(req,res,next)=>{
                                             }
                                             else
                                             {
-                                                con.release();  // return the connection to pool
-                                                res.status(200).json({
-                                                    message:"Quiz Entered Successful",
-                                                    quiz_id: quiz_id,
-                                                    request:{
-                                                      type:"POST",
-                                                      url:"https://....../quiz/givequiz/"+quiz_id
-                                                    }
+                                                con.query("INSERT INTO person_quiz (p_id,quiz_id) VALUES (?,?)",[req.userData.p_id,quiz_id],(err,rows,fields)=>{
+                                                  if(err)
+                                                  {
+                                                      con.release();
+                                                      return res.status(500).json({
+                                                          error:err
+                                                      });
+                                                  }
+                                                  else
+                                                  {
+                                                      con.release();  // return the connection to pool
+                                                      res.status(200).json({
+                                                          message:"Quiz Entered Successful",
+                                                          quiz_id: quiz_id,
+                                                          request:{
+                                                            type:"POST",
+                                                            url:"https://....../quiz/givequiz/"+quiz_id
+                                                          }
+                                                      });
+                                                  }
                                                 });
                                             }
                                          });
@@ -146,7 +158,7 @@ router.post("/createquiz",(req,res,next)=>{
       });
 });
 
-router.get("/:quizId",(req,res,next)=>{
+router.get("/:quizId",checkAuth,(req,res,next)=>{
       pool.getConnection((err,con)=>{
           if(err)
           {
