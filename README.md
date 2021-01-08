@@ -13,7 +13,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 # USER LOGIN
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/login
 2. Expecting Email, Password as email(string), password(string)
-3. If Successfully Logged In, returns JSON containing message and Token
+3. If Successfully Logged In, returns JSON containing message, access, and Token
 
 # CREATING A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/createquiz
