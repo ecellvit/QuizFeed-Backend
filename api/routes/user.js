@@ -15,10 +15,10 @@ const pool = mySql.createPool({
 
 router.get("/signup",(req,res,next)=>{
       res.status(404).json({
-      Error:"REQUEST FAILED",
-      Message:"No GET Request for user/Signup. Refer Documentation",
-      Request:{
-        Type :"POST",
+      error:"REQUEST FAILED",
+      message:"No GET Request for user/Signup. Refer Documentation",
+      request:{
+        type :"POST",
         url:"https://...../user/signup"
       }
     });
@@ -33,8 +33,8 @@ router.post("/signup",(req,res,next) =>{
         {
           console.log("Error");
           res.status(500).json({
-            Error:err,
-            Message:"DB Connection Error"
+            error:err,
+            message:"DB Connection Error"
           });
         }
         else
@@ -48,8 +48,8 @@ router.post("/signup",(req,res,next) =>{
                   con.release();  // return the connection to pool
                   console.log("Error");
                   res.status(500).json({
-                    Error:err,
-                    Message:"SignUp Query Error"
+                    error:err,
+                    message:"SignUp Query Error"
                   });
               }
               else
@@ -90,11 +90,11 @@ router.post("/signup",(req,res,next) =>{
                                   {
                                       con.release();  // return the connection to pool
                                       res.status(200).json({
-                                          Message:"Signed Up Successful",
-                                          Name: req.body.name,
-                                          Email: req.body.email,
-                                          Access: req.body.access,
-                                          Request:{
+                                          message:"Signed Up Successful",
+                                          name: req.body.name,
+                                          email: req.body.email,
+                                          access: req.body.access,
+                                          request:{
                                             type:"POST",
                                             url:"https://localhost:3000/user/login"
                                           }
