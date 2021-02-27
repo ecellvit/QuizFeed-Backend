@@ -1,7 +1,8 @@
 #To DO
 - [X]   Verification of Teacher posting Quiz
-- [ ]   Showing all quizzes created by teacher   
-- [ ]   ------------THE END OF TEACHERS PART 1------
+- [X]   Showing all quizzes created by teacher  
+- [X]   Get name of quiz when quiz id passed 
+- [X]   ------------THE END OF TEACHERS PART 1------
 - [ ]   Show Students all available quizes post verification is student
 - [ ]   Show all questions of quiz '' ''
 - [ ]   store answer for all question of quiz '' ''
