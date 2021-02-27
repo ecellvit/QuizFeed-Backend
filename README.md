@@ -1,4 +1,4 @@
-#To DO
+# TO DO
 - [X]   Verification of Teacher posting Quiz
 - [X]   Showing all quizzes created by teacher  
 - [X]   Get name of quiz when quiz id passed 
