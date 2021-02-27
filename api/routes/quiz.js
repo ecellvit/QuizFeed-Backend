@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const mySql = require('mysql');
 const router = express.Router();
 const checkAuth = require("../middleware/check-auth");
+const { route } = require('./user');
 
 //create connection Pool
 const pool = mySql.createPool({
@@ -33,6 +34,9 @@ router.get("/createquiz",(req,res,next)=>{
 });
 
 router.post("/createquiz",checkAuth,(req,res,next)=>{
+
+    if(req.userData.access == "teacher")
+    {
 
       pool.getConnection((err,con) => {
           if(err)
@@ -156,6 +160,110 @@ router.post("/createquiz",checkAuth,(req,res,next)=>{
             });
           }
       });
+
+    }
+    else
+    {
+        res.status(500).json({
+            message:"Unauthorized access"
+          });
+    }
+});
+
+router.get("/getQuizName/:quizId",checkAuth,(req,res)=>{
+        
+    pool.getConnection((err,con)=>{
+        if(err)
+        {
+            console.log("Error");
+              res.status(500).json({
+                error:err,
+                message:"Db Connection Error"
+              });
+        }
+        else
+        {
+            console.log("\nDatabase Connection Established Successfully");
+            console.log("-----------------------------------------------");
+            con.query("SELECT quiz_name FROM quiz_details WHERE quiz_id = ?",[req.params.quizId],(err,rows,fields)=>
+            {
+                if(err)
+                {
+                    con.release();
+                    return res.status(500).json({
+                            error:err
+                            });
+                }
+                else
+                {
+                    res.json({
+                        quiz_name : rows[0].quiz_name
+                    })
+                }
+            });
+        }
+    });
+});
+
+router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
+{
+    if(req.userData.access == "teacher")
+    {
+        pool.getConnection((err,con)=>
+        {
+            if(err)
+            {
+              console.log("Error");
+              res.status(500).json({
+                error:err,
+                message:"Db Connection Error"
+              });
+            }
+            
+            else
+            {
+                console.log("\nDatabase Connection Established Successfully");
+                console.log("-----------------------------------------------");
+                con.query("SELECT quiz_id FROM person_quiz WHERE p_id = ?",[req.userData.p_id],(err,rows,fields)=>
+                {
+                    if(err)
+                    {
+                        con.release();
+                        return res.status(500).json({
+                                error:err
+                                });
+                    }
+                    else
+                    {
+                        let quiz_ids = [];
+                        for(var i=0; i<rows.length;i++)
+                        {
+                            quiz_ids.push(rows[i].quiz_id);
+                        }
+                        res.json({
+                            QuizIds : quiz_ids
+                        });
+
+                    }
+
+
+                });
+            }
+        });
+    }
+
+    else
+    {
+        res.status(500).json({
+            message:"Unauthorized Access"
+        });
+    }
+});
+
+router.get("/checkAccess",checkAuth,(req,res,next)=>{
+    res.json({
+        Access: req.userData.access
+    });
 });
 
 router.get("/:quizId",checkAuth,(req,res,next)=>{
@@ -206,5 +314,7 @@ router.get("/:quizId",checkAuth,(req,res,next)=>{
           }
       });
 });
+
+
 
 module.exports = router;
