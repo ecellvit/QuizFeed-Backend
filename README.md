@@ -1,5 +1,5 @@
 #To DO
-- [-]   Verification of Teacher posting Quiz
+- [X]   Verification of Teacher posting Quiz
 - [ ]   Showing all quizzes created by teacher   
 - [ ]   ------------THE END OF TEACHERS PART 1------
 - [ ]   Show Students all available quizes post verification is student
