@@ -1,3 +1,19 @@
+#To DO
+- [ ]   Verification of Teacher posting Quiz
+- [ ]   Showing all quizzes created by teacher   
+- [ ]   ------------THE END OF TEACHERS PART 1------
+- [ ]   Show Students all available quizes post verification is student
+- [ ]   Show all questions of quiz '' ''
+- [ ]   store answer for all question of quiz '' ''
+- [ ]   -----------THE END OF STUDENTS PART 1-----
+- [ ]   Showing all quizzes created by teacher
+- [ ]   Showing all students who attempted quiz query through quiz id/name
+- [ ]   Showing all answers by student selected
+- [ ]   Store marks for each answer of the student in the quiz
+- [ ]   ----------THE END OF TEACHER PART 2-------
+- [ ]   Show Students all marks he got in quiz according to quiz
+- [ ]   ----------THE END OF STUDENT PART 2-------
+
 # QuizFeed-Backend
 Backend of Authentication and Management of Quizfeed
 Hoisted at https://quizfeedapi.herokuapp.com/
