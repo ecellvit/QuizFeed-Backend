@@ -7,7 +7,7 @@
 - [ ]   Show all questions of quiz '' ''
 - [ ]   store answer for all question of quiz '' ''
 - [ ]   -----------THE END OF STUDENTS PART 1-----
-- [ ]   Showing all quizzes created by teacher
+- [X]   Showing all quizzes created by teacher
 - [ ]   Showing all students who attempted quiz query through quiz id/name
 - [ ]   Showing all answers by student selected
 - [ ]   Store marks for each answer of the student in the quiz
