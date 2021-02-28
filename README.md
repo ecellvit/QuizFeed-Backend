@@ -71,7 +71,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 4. NOTE: The question_ids array and the answers array must be in order
 5. If Successfully answer enter, returns JSON containing message
 
-# SENDING ANSWER TO QUIZ QUESTIONS
+# GETTING ALL STUDENTS WHO ATTEMPTED A QUIZ BY QUIZ ID
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllAttempted 
 2. Header must have Authorization Token with access teacher
 3. Expecting quiz_id as quiz_id(int) in  JSON format
