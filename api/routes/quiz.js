@@ -324,6 +324,60 @@ router.get("/checkAccess",checkAuth,(req,res,next)=>{
     });
 });
 
+router.post("/showAllAttempted",checkAuth,(req,res,next)=>{
+    
+    if(!req.body.quiz_id)
+    {
+        return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
+    if(req.userData.access == "teacher")
+    {
+        pool.getConnection((err,con)=>{
+            if(err)
+            {
+                res.status(500).json({
+                    Error:err,
+                    message:"Db Connection Error"
+                  });
+            }
+            else
+            {
+                console.log("\nDatabase Connection Established Successfully");
+                con.query("SELECT users.p_id, name FROM student_attempted_quiz JOIN users ON users.p_id = student_attempted_quiz.p_id WHERE quiz_id = ?",[req.body.quiz_id],(err,rows,fields)=>{
+                    if(err)
+                    {
+                        return res.status(500).json({
+                            error:err
+                        });
+                    }
+                    else
+                    {
+                        let persons_attempted = {};
+                        for(var i = 0; i < rows.length; i++)
+                        {
+                            persons_attempted[rows[i].p_id] = rows[i].name;
+                        }
+                        res.status(200).json({
+                            persons_attempt: persons_attempted
+                        });
+                    }
+                });
+            }
+        });
+    }
+    else
+    {
+        res.status(500).json({
+            message:"Unauthorized Access"
+        });
+    }
+});
+
+
+
 router.get("/:quizId",checkAuth,(req,res,next)=>{
       pool.getConnection((err,con)=>{
           if(err)
