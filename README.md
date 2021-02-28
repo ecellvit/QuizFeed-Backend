@@ -15,7 +15,9 @@
 - [ ]   Show Students all marks he got in quiz according to quiz
 - [ ]   ----------THE END OF STUDENT PART 2-------
 - [X]   Make sure quiz can be given once only
+- [ ]   Make Sure only non-attempted quizes are shown
 - [ ]   Security Features
+- [ ]   ----------THE END OF FEATURES ADDITIONAL ------
 
 # QuizFeed-Backend
 Backend of Authentication and Management of Quizfeed
