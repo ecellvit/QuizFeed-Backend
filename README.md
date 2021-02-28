@@ -3,8 +3,8 @@
 - [X]   Showing all quizzes created by teacher  
 - [X]   Get name of quiz when quiz id passed 
 - [X]   ------------THE END OF TEACHERS PART 1------
-- [ ]   Show Students all available quizes post verification is student
-- [ ]   Show all questions of quiz '' ''
+- [X]   Show Students all available quizes post verification is student
+- [X]   Show all questions of quiz '' ''
 - [ ]   store answer for all question of quiz '' ''
 - [ ]   -----------THE END OF STUDENTS PART 1-----
 - [X]   Showing all quizzes created by teacher
@@ -38,10 +38,15 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 3. Expecting Quizname, Questions as quizname(string), questions(array of question (string))
 4. If Successfully quiz created, returns JSON containing message, quiz id, and url to access quiz data
 
+# GETTING ALL QUIZES
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllQuizes
+2. Header must have Authorization Token with access of student
+3. If Successfully returns JSON containing array key value pairs of quiz_name as key and quiz_id as value
+
 # GETTING ALL QUIZES CREATED BY TEACHER
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllCreatedQuizes
 2. Header must have Authorization Token with access of teacher
-3. If Successfully returns JSON containing array of all quiz_id's created by teeacher
+3. If Successfully returns JSON containing array key value pairs of quiz_name as key and quiz_id as value created by teeacher
 
 # GETTING QUIZNAME BY QUIZ ID
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/getQuizName/:quizId
