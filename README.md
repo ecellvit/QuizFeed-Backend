@@ -8,7 +8,7 @@
 - [X]   Store answer for all question of quiz '' ''
 - [X]   -----------THE END OF STUDENTS PART 1-----
 - [X]   Showing all quizzes created by teacher
-- [ ]   Showing all students who attempted quiz query through quiz id/name
+- [X]   Showing all students who attempted quiz query through quiz id/name
 - [ ]   Showing all answers by student selected
 - [ ]   Store marks for each answer of the student in the quiz
 - [ ]   ----------THE END OF TEACHER PART 2-------
@@ -64,8 +64,13 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 
 # SENDING ANSWER TO QUIZ QUESTIONS
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/answer 
-2. Header must have Authorization Token with access Student
+2. Header must have Authorization Token with access student
 3. Expecting quiz_id, question_ids of the quiz, answers as quiz_id(int), question_ids(array of question_id(int)), answers(array of answer(string)) in JSON format
 4. NOTE: The question_ids array and the answers array must be in order
 5. If Successfully answer enter, returns JSON containing message
 
+# SENDING ANSWER TO QUIZ QUESTIONS
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllAttempted 
+2. Header must have Authorization Token with access teacher
+3. Expecting quiz_id as quiz_id(int) in  JSON format
+4. If Successfull returns attempted_persons Json containing Person ID as Key and Person Name as Value
