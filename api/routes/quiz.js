@@ -81,6 +81,20 @@ router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
 
 router.post("/createquiz",checkAuth,(req,res,next)=>{
 
+    if(!req.body.quizname)
+    {
+        return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
+    if(!req.body.questions)
+    {
+        return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
     if(req.userData.access == "teacher")
     {
 
@@ -322,7 +336,7 @@ router.get("/:quizId",checkAuth,(req,res,next)=>{
           }
           else
           {
-              const sql = "SELECT quiz_name, question FROM quiz_details JOIN quiz_questions ON quiz_details.quiz_id = quiz_questions.quiz_id JOIN question_details ON quiz_questions.question_id = question_details.question_id WHERE quiz_details.quiz_id = "+req.params.quizId;
+              const sql = "SELECT quiz_name, quiz_details.quiz_id, question_details.question_id, question FROM quiz_details JOIN quiz_questions ON quiz_details.quiz_id = quiz_questions.quiz_id JOIN question_details ON quiz_questions.question_id = question_details.question_id WHERE quiz_details.quiz_id = "+req.params.quizId;
               con.query(sql,(err,rows,fields)=>{
                   if(err)
                   {
@@ -337,13 +351,15 @@ router.get("/:quizId",checkAuth,(req,res,next)=>{
                       if(rows.length > 0)
                       {
                           const quizname = rows[0].quiz_name;
-                          let questions = [];
+                          const quizId = rows[0].quiz_id;
+                          let questions = {};
                           for(var i=0;i<rows.length;i++)
                           {
-                              questions.push(rows[i].question);
+                              questions[rows[i].question_id] = rows[i].question;
                           }
                           return res.status(200).json({
                               quiz_name: quizname,
+                              quiz_id : quizId,
                               questions: questions
                           });
                       }
