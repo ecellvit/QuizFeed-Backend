@@ -10,10 +10,10 @@
 - [X]   Showing all quizzes created by teacher
 - [X]   Showing all students who attempted quiz query through quiz id/name
 - [X]   Showing all answers by student selected
-- [ ]   Store marks for each answer of the student in the quiz
-- [ ]   ----------THE END OF TEACHER PART 2-------
-- [ ]   Show Students all marks he got in quiz according to quiz
-- [ ]   ----------THE END OF STUDENT PART 2-------
+- [X]   Store Total marks for each quiz of the student in the quiz
+- [X]   ----------THE END OF TEACHER PART 2-------
+- [X]   Show Students all marks he got in quiz according to quiz
+- [X]   ----------THE END OF STUDENT PART 2-------
 - [X]   Make sure quiz can be given once only
 - [ ]   Make Sure only non-attempted quizes are shown
 - [ ]   Security Features
@@ -76,3 +76,19 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 2. Header must have Authorization Token with access teacher
 3. Expecting quiz_id as quiz_id(int) in  JSON format
 4. If Successfull returns persons_attempt Json containing Person ID as Key and Person Name as Value
+
+# ENTERING MARKS FOR A STUDENT FOR A QUIZ
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/enter 
+2. Header must have Authorization Token with access teacher
+3. Expecting quiz_id,p_id of student, mark as quiz_id(int), p_id(int), mark(int) in  JSON format
+
+# GETTING ALL MARKS OF STUDENT 
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/getStudentMarks 
+2. Header must have Authorization Token with access student
+3. If Successfull returns all_marks Json containing quiz_id as Key and mark as Value of that student
+
+# GETTING  MARKS OF STUDENT BY ID
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/getStudentMarksByPID 
+2. Header must have Authorization Token with access teacher
+3. Expecting p_id as p_id(int) in  JSON format
+4. If Successfull returns all_marks Json containing quiz_id as Key and mark as Value
