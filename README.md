@@ -73,4 +73,4 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllAttempted 
 2. Header must have Authorization Token with access teacher
 3. Expecting quiz_id as quiz_id(int) in  JSON format
-4. If Successfull returns attempted_persons Json containing Person ID as Key and Person Name as Value
+4. If Successfull returns persons_attempt Json containing Person ID as Key and Person Name as Value
