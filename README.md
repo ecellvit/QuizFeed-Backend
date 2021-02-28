@@ -5,8 +5,8 @@
 - [X]   ------------THE END OF TEACHERS PART 1------
 - [X]   Show Students all available quizes post verification is student
 - [X]   Show all questions of quiz '' ''
-- [ ]   store answer for all question of quiz '' ''
-- [ ]   -----------THE END OF STUDENTS PART 1-----
+- [X]   Store answer for all question of quiz '' ''
+- [X]   -----------THE END OF STUDENTS PART 1-----
 - [X]   Showing all quizzes created by teacher
 - [ ]   Showing all students who attempted quiz query through quiz id/name
 - [ ]   Showing all answers by student selected
@@ -14,6 +14,8 @@
 - [ ]   ----------THE END OF TEACHER PART 2-------
 - [ ]   Show Students all marks he got in quiz according to quiz
 - [ ]   ----------THE END OF STUDENT PART 2-------
+- [X]   Make sure quiz can be given once only
+- [ ]   Security Features
 
 # QuizFeed-Backend
 Backend of Authentication and Management of Quizfeed
@@ -35,7 +37,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 # CREATING A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/createquiz
 2. Header must have Authorization Token with access of teacher in payload
-3. Expecting Quizname, Questions as quizname(string), questions(array of question (string))
+3. Expecting Quizname, Questions as quizname(string), questions(array of question (string)) in JSON format
 4. If Successfully quiz created, returns JSON containing message, quiz id, and url to access quiz data
 
 # GETTING ALL QUIZES
@@ -58,4 +60,12 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/:quizid (replace quizid with the Quiz Id got while creating Quiz)
 2. Header must have Authorization Token
 3. Expecting QuizId as shown in step 1
-4. If Quiz Exists, returns JSON containing quizname and  JSON containing key value pairs of question_id as key and question as value
+4. If Quiz Exists, returns JSON containing quizname, quiz_id and questions JSON containing key value pairs of question_id as key and question as value
+
+# SENDING ANSWER TO QUIZ QUESTIONS
+1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/answer 
+2. Header must have Authorization Token with access Student
+3. Expecting quiz_id, question_ids of the quiz, answers as quiz_id(int), question_ids(array of question_id(int)), answers(array of answer(string)) in JSON format
+4. NOTE: The question_ids array and the answers array must be in order
+5. If Successfully answer enter, returns JSON containing message
+
