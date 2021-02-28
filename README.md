@@ -41,12 +41,12 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 # GETTING ALL QUIZES
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllQuizes
 2. Header must have Authorization Token with access of student
-3. If Successfully returns JSON containing array key value pairs of quiz_name as key and quiz_id as value
+3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value
 
 # GETTING ALL QUIZES CREATED BY TEACHER
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllCreatedQuizes
 2. Header must have Authorization Token with access of teacher
-3. If Successfully returns JSON containing array key value pairs of quiz_name as key and quiz_id as value created by teeacher
+3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value created by teeacher
 
 # GETTING QUIZNAME BY QUIZ ID
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/getQuizName/:quizId
@@ -58,4 +58,4 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/:quizid (replace quizid with the Quiz Id got while creating Quiz)
 2. Header must have Authorization Token
 3. Expecting QuizId as shown in step 1
-4. If Quiz Exists, returns JSON containing quizname and array questions, containing all the questions of the quiz
+4. If Quiz Exists, returns JSON containing quizname and  JSON containing key value pairs of question_id as key and question as value
