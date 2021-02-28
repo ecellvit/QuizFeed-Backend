@@ -64,6 +64,7 @@ router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
                         {
                             quiz[rows[i].quiz_name] = rows[i].quiz_id;
                         }
+                        con.release();
                         res.status(200).json(quiz);
                     }
                 });
@@ -259,6 +260,7 @@ router.get("/getQuizName/:quizId",checkAuth,(req,res)=>{
                     res.json({
                         quiz_name : rows[0].quiz_name
                     })
+                    con.release();
                 }
             });
         }
@@ -300,7 +302,9 @@ router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
                         {
                             quiz[rows[i].quiz_name] = rows[i].quiz_id;
                         }
+                        con.release();
                         res.status(200).json(quiz);
+                        
 
                     }
 
@@ -360,6 +364,7 @@ router.post("/showAllAttempted",checkAuth,(req,res,next)=>{
                         {
                             persons_attempted[rows[i].p_id] = rows[i].name;
                         }
+                        con.release();
                         res.status(200).json({
                             persons_attempt: persons_attempted
                         });
@@ -411,6 +416,7 @@ router.get("/:quizId",checkAuth,(req,res,next)=>{
                           {
                               questions[rows[i].question_id] = rows[i].question;
                           }
+                          con.release();
                           return res.status(200).json({
                               quiz_name: quizname,
                               quiz_id : quizId,

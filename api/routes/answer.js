@@ -128,6 +128,7 @@ router.post("/",checkAuth,(req,res,next)=>{
                                                         }
                                                         else
                                                         {
+                                                            con.release();
                                                             res.status(200).json({
                                                                 message: "Answers Entered Successfully"
                                                             })
