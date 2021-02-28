@@ -33,6 +33,52 @@ router.get("/createquiz",(req,res,next)=>{
 
 });
 
+router.get("/showAllQuizes",checkAuth,(req,res,next)=>{
+    if(req.userData.access == "student")
+    {
+        pool.getConnection((err,con)=>{
+            if(err)
+            {
+                res.status(500).json({
+                    error:err,
+                    message:"Db Connection Error"
+                });
+            }
+            else
+            {
+                console.log("\nDatabase Connection Established Successfully");
+                console.log("-----------------------------------------------");
+                con.query("SELECT * FROM quiz_details",(err,rows,fields)=>{
+                    if(err)
+                    {
+                        con.release();  // return the connection to pool
+                        console.log("Error");
+                        return res.status(500).json({
+                            error:err
+                        });
+                    }
+                    else
+                    {
+                        let quiz = {}
+                        for(var i=0; i<rows.length; i++ )
+                        {
+                            quiz[rows[i].quiz_name] = rows[i].quiz_id;
+                        }
+                        res.status(200).json(quiz);
+                    }
+                });
+
+            }
+        });
+    }
+    else
+    {
+        res.status(500).json({
+            message: "Unauthorized Access of Route"
+        })
+    }
+}); 
+
 router.post("/createquiz",checkAuth,(req,res,next)=>{
 
     if(req.userData.access == "teacher")
@@ -224,7 +270,7 @@ router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
             {
                 console.log("\nDatabase Connection Established Successfully");
                 console.log("-----------------------------------------------");
-                con.query("SELECT quiz_id FROM person_quiz WHERE p_id = ?",[req.userData.p_id],(err,rows,fields)=>
+                con.query("SELECT quiz_name, quiz_details.quiz_id FROM quiz_details JOIN person_quiz ON person_quiz.quiz_id = quiz_details.quiz_id WHERE p_id = ?",[req.userData.p_id],(err,rows,fields)=>
                 {
                     if(err)
                     {
@@ -235,14 +281,12 @@ router.get("/showAllCreatedQuizes",checkAuth,(req,res)=>
                     }
                     else
                     {
-                        let quiz_ids = [];
-                        for(var i=0; i<rows.length;i++)
+                        let quiz = {}
+                        for(var i=0; i<rows.length; i++ )
                         {
-                            quiz_ids.push(rows[i].quiz_id);
+                            quiz[rows[i].quiz_name] = rows[i].quiz_id;
                         }
-                        res.json({
-                            QuizIds : quiz_ids
-                        });
+                        res.status(200).json(quiz);
 
                     }
 
