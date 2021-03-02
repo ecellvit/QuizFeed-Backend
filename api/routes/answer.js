@@ -63,6 +63,7 @@ router.post("/",checkAuth,(req,res,next)=>{
                     {
                         if(rows1.length >= 1)
                         {
+                            con.release();
                             return res.status(400).json({
                                 message:"Quiz already attempted by Student. Multiple attempts not allowed"
                             });
@@ -154,6 +155,93 @@ router.post("/",checkAuth,(req,res,next)=>{
             message: "Unauthorized Access of Route"
         })
     }
+});
+
+router.post("/getAnswer",checkAuth,(req,res)=>{
+    
+    if(!req.body.quiz_id)
+    {
+        return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
+    if(!req.body.p_id)
+    {
+        return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
+    if(req.userData.access == "teacher")
+    {
+        pool.getConnection((err,con)=>{
+            if(err)
+            {
+                res.status(500).json({
+                    error:err,
+                    message:"Db Connection Error"
+                });
+            }
+            else
+            {
+                con.query("SELECT * FROM student_attempted_quiz WHERE quiz_id = ? AND p_id = ?",[req.body.quiz_id, req.body.p_id],(err,rows,fields)=>{
+                    if(err)
+                    {
+                        con.release();
+                          return res.status(500).json({
+                              error:err
+                          });
+                    }
+                    else
+                    {
+                        if(rows.length < 1)
+                        {
+                            con.release();
+                            return res.status(400).json({
+                                message:"Quiz Not attempted by Student. No Answers in Record"
+                            });
+                        }
+                        else
+                        {
+                            con.query("SELECT answer FROM question_answer JOIN answer_details ON answer_details.answer_id = question_answer.answer_id WHERE question_id IN (SELECT question_id FROM quiz_questions WHERE quiz_id = ?) AND p_id = ?",[req.body.quiz_id,req.body.p_id],(err,rows1,fields)=>{
+                                
+                                if(err)
+                                {
+                                    con.release();
+                                      return res.status(500).json({
+                                          error:err
+                                      });
+                                }
+                                else
+                                {
+                                    let data = [];
+                                    for(var i = 0; i < rows1.length;i++)
+                                    {
+                                        data.push(rows1[i].answer);
+                                    }
+                                    con.release();
+                                    res.status(200).json({
+                                        answer: data
+                                    });
+                                }
+
+                            });
+                        }
+                    } 
+
+                });
+            }
+        });
+    }
+    else
+    {
+        res.status(500).json({
+            message: "Unauthorized Access of Route"
+        })
+    }
+
+
 });
 
 module.exports = router;
