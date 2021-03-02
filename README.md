@@ -9,7 +9,7 @@
 - [X]   -----------THE END OF STUDENTS PART 1-----
 - [X]   Showing all quizzes created by teacher
 - [X]   Showing all students who attempted quiz query through quiz id/name
-- [X]   Showing all answers by student selected
+- [ ]   Showing all answers by student selected
 - [X]   Store Total marks for each quiz of the student in the quiz
 - [X]   ----------THE END OF TEACHER PART 2-------
 - [X]   Show Students all marks he got in quiz according to quiz
