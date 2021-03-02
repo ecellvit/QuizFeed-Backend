@@ -53,7 +53,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value created by teeacher
 
 # GETTING QUIZNAME BY QUIZ ID
-1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/getQuizName/:quizId
+1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/getQuizName/:quizId
 2. Expecting QuizId as shown in step 1
 3. Header must have Authorization Token
 4. If Successfully returns JSON containing quizname
