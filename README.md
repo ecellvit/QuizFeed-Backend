@@ -48,7 +48,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value
 
 # GETTING ALL QUIZES CREATED BY TEACHER
-1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllCreatedQuizes
+1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/showAllCreatedQuizes
 2. Header must have Authorization Token with access of teacher
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value created by teeacher
 
