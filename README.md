@@ -38,12 +38,12 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 
 # CREATING A QUIZ
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/createquiz
-2. Header must have Authorization Token with access of teacher in payload
+2. Header must have Authorization Token with access of teacher
 3. Expecting Quizname, Questions as quizname(string), questions(array of question (string)) in JSON format
 4. If Successfully quiz created, returns JSON containing message, quiz id, and url to access quiz data
 
 # GETTING ALL QUIZES
-1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/quiz/showAllQuizes
+1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/showAllQuizes
 2. Header must have Authorization Token with access of student
 3. If Successfully returns JSON containing key value pairs of quiz_name as key and quiz_id as value
 
