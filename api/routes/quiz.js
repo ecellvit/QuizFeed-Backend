@@ -383,7 +383,7 @@ router.post("/showAllAttempted",checkAuth,(req,res,next)=>{
 
 
 
-router.get("/:quizId",checkAuth,(req,res,next)=>{
+router.get("/getQuizDetails/:quizId",checkAuth,(req,res,next)=>{
       pool.getConnection((err,con)=>{
           if(err)
           {
@@ -406,7 +406,6 @@ router.get("/:quizId",checkAuth,(req,res,next)=>{
                   }
                   else
                   {
-                      con.release();
                       if(rows.length > 0)
                       {
                           const quizname = rows[0].quiz_name;
