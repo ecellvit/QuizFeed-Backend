@@ -59,7 +59,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 4. If Successfully returns JSON containing quizname
 
 # GETTING QUIZ DATA
-1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/:quizid (replace quizid with the Quiz Id got while creating Quiz)
+1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/quiz/getQuizDetails/:quizId (replace quizid with the Quiz Id got while creating Quiz)
 2. Header must have Authorization Token
 3. Expecting QuizId as shown in step 1
 4. If Quiz Exists, returns JSON containing quizname, quiz_id and questions JSON containing key value pairs of question_id as key and question as value
