@@ -83,7 +83,7 @@ Hoisted at https://quizfeedapi.herokuapp.com/
 3. Expecting quiz_id,p_id of student, mark as quiz_id(int), p_id(int), mark(int) in  JSON format
 
 # GETTING ALL MARKS OF STUDENT 
-1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/marks/getStudentMarks 
+1. Access Route Using GET Method https://quizfeedapi.herokuapp.com/marks/getStudentMarks 
 2. Header must have Authorization Token with access student
 3. If Successfull returns all_marks Json containing quiz_id as Key and mark as Value of that student
 
