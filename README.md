@@ -31,6 +31,17 @@ Hoisted at https://quizfeedapi.herokuapp.com/
    #### NOTE: Access can be of three types only- student / teacher / admin
 4. If Successfully Registered, returns JSON containing Message, Name,Email,Access, and Request Possible
 
+## Example Body for USER SIGNUP
+In JSON format
+```
+{
+   "name":"quziey",
+   "email":"quizey@gmail.com",
+   "password":"12345678",
+   "access":"student"
+}
+```
+
 # USER LOGIN
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/login
 2. Expecting Email, Password as email(string), password(string) in JSON format in Body
