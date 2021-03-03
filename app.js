@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const userRoutes = require("./api/routes/user");
 const quizRoutes = require("./api/routes/quiz");
+const answerRoutes = require("./api/routes/answer");
+const marksRoutes = require("./api/routes/marks");
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use((req,res,next)=>
 //Routes which should handle Requests
 app.use('/user',userRoutes);
 app.use('/quiz',quizRoutes);
+app.use('/answer',answerRoutes);
+app.use('/marks', marksRoutes);
 
 app.get("/",(req,res)=>{
     res.send("QUIZFEED API: REFER TO DOCUMENTATION FOR USAGE");

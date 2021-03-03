@@ -27,6 +27,31 @@ router.get("/signup",(req,res,next)=>{
 
 router.post("/signup",(req,res,next) =>{
 
+    if(!req.body.name)
+    {
+      return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        });
+    }
+    if(!req.body.email)
+    {
+      return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+    if(!req.body.password)
+    {
+      return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+    if(!req.body.access)
+    {
+      return res.status(400).json({
+            Message: "Required Data to be Sent Missing Please Refer Documentation"
+        })
+    }
+
     //connectiong to database and returning back connection as con
     pool.getConnection((err,con) =>{
         if(err)
@@ -127,6 +152,18 @@ router.get("/login",(req,res,next)=>{
 });
 
 router.post("/login",(req,res,next)=>{
+      if(!req.body.email)
+      {
+        return res.status(400).json({
+              Message: "Required Data to be Sent Missing Please Refer Documentation"
+          })
+      }
+      if(!req.body.password)
+      {
+        return res.status(400).json({
+              Message: "Required Data to be Sent Missing Please Refer Documentation"
+          })
+      }
 
       pool.getConnection((err,con)=>{
           if(err)
