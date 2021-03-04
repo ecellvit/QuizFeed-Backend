@@ -23,7 +23,7 @@
 Backend of Authentication and Management of Quizfeed
 Hoisted at https://quizfeedapi.herokuapp.com/
 
-#For Documentation Refer : 
+# For Documentation Refer : 
 https://documenter.getpostman.com/view/14038453/Tz5iAgcM
 
 ## DOCUMENTATION
