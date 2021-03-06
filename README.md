@@ -23,7 +23,10 @@
 Backend of Authentication and Management of Quizfeed
 Hoisted at https://quizfeedapi.herokuapp.com/
 
-# DOCUMENTATION
+# For Documentation Refer : 
+https://documenter.getpostman.com/view/14038453/Tz5iAgcM
+
+## DOCUMENTATION
 
 # USER SIGNUP
 1. Access Route Using POST Method https://quizfeedapi.herokuapp.com/user/signup 
